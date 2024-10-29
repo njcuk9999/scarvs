@@ -35,7 +35,7 @@ def main():
     general.start_splash('UPRV Setup')
     # get parameters
     params = startup.get_params(yaml_required=False, from_file=False,
-                                description=__description__)
+                                description=__description__, name='SETUP')
     # setup using parameters
     startup.setup(params)
     # print splash

@@ -35,7 +35,8 @@ def main(yaml_file: Optional[str] = None):
     # print splash
     general.start_splash('UPRV Run')
     # get parameters
-    params = startup.get_params(yaml_file, description=__description__)
+    params = startup.get_params(yaml_file, description=__description__,
+                                name='RUN')
     # run science functions
     for science_func in params['SCIFUNCS']:
         # check whether we should run this function then run it

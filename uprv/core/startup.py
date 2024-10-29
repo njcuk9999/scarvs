@@ -11,6 +11,7 @@ Created on 2024-10-29 at 10:16
 """
 import argparse
 import os
+import string
 from typing import Optional
 
 from aperocore.constants import param_functions
@@ -46,7 +47,8 @@ PATHS = ['DATA_PATH', 'PLOT_PATH']
 def get_params(yaml_file: Optional[str] = None,
                description: str = None,
                yaml_required: bool = True,
-               from_file: bool = True) -> ParamDict:
+               from_file: bool = True,
+               name: Optional[str] = None) -> ParamDict:
     """
     Get the parameters (default, command line and function call)
 
@@ -58,6 +60,9 @@ def get_params(yaml_file: Optional[str] = None,
     """
     # get the default arguments
     params = default_args()
+    # set name
+    if name is not None:
+        params['RECIPE_SHORT'] = name
     # get the yaml file
     yaml_file = command_line_args(description=description,
                                   yaml_required=yaml_required,
@@ -127,7 +132,7 @@ def command_line_args(description: str = None,
     # deal with no yaml file set from function call or command line arguments
     # -------------------------------------------------------------------------
     if args.yaml_file == 'None':
-        question = 'Please enter the yaml file to load:\t'
+        question = '\nPlease enter the yaml file to load:\t'
         # we always go into here
         while True:
             # ask the user for a yaml file
@@ -135,6 +140,11 @@ def command_line_args(description: str = None,
             # yaml file cannot have spaces
             if ' ' in yaml_file:
                 emsg = 'Yaml file cannot have spaces in the name'
+                print(emsg)
+                continue
+            # yaml must have characters
+            if len(yaml_file) == 4:
+                emsg = 'Yaml file must be longer than 4 characters'
                 print(emsg)
                 continue
             # yaml file must end in .yaml
@@ -151,6 +161,12 @@ def command_line_args(description: str = None,
                     continue
             # break loop
             break
+        # replace all punctuation with underscores
+        for char in string.punctuation:
+            yaml_file = yaml_file.replace(char, '_')
+        # replace double underscores with single underscores
+        while '__' in yaml_file:
+            yaml_file = yaml_file.replace('__', '_')
     else:
         yaml_file = args.yaml_file
     # -------------------------------------------------------------------------
