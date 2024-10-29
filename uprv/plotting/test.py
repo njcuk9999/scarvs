@@ -48,7 +48,7 @@ def test(params: ParamDict):
     frame.plot([1, 2, 3, 4], [1, 4, 9, 16])
     # -------------------------------------------------------------------------
     # deal with saving (do not remove)
-    core.save(params, outname='test_plot.pdf')
+    core.save(params, outname='test_plot')
     core.show(params)
     core.close()
 

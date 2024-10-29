@@ -112,7 +112,8 @@ def command_line_args(description: str = None,
                 emsg = 'Yaml file does not exist: {0}'
                 eargs = [yaml_file]
                 raise base.UPRVException(emsg.format(*eargs))
-        elif isinstance(yaml_file, str):
+        # make sure yaml file is a string
+        if isinstance(yaml_file, str):
             return yaml_file
     # -------------------------------------------------------------------------
     # setup argument parser
