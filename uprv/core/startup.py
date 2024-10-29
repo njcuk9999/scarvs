@@ -137,21 +137,11 @@ def command_line_args(description: str = None,
         while True:
             # ask the user for a yaml file
             yaml_file = input(question)
-            # yaml file cannot have spaces
-            if ' ' in yaml_file:
-                emsg = 'Yaml file cannot have spaces in the name'
-                print(emsg)
-                continue
-            # yaml must have characters
-            if len(yaml_file) == 4:
-                emsg = 'Yaml file must be longer than 4 characters'
-                print(emsg)
-                continue
-            # yaml file must end in .yaml
-            if not yaml_file.endswith('.yaml'):
-                yaml_file += '.yaml'
             # deal with yaml file being required
             if yaml_required:
+                # yaml file must end in .yaml
+                if not yaml_file.endswith('.yaml'):
+                    yaml_file += '.yaml'
                 # deal with no yaml file existing
                 if not os.path.exists(yaml_file):
                     # raise exception
@@ -159,14 +149,28 @@ def command_line_args(description: str = None,
                     eargs = [yaml_file]
                     print(emsg.format(*eargs))
                     continue
+            # yaml file cannot have spaces
+            if ' ' in yaml_file:
+                emsg = 'Yaml file cannot have spaces in the name'
+                print(emsg)
+                continue
+            # replace all punctuation with underscores
+            for char in string.punctuation.replace('.', ''):
+                yaml_file = yaml_file.replace(char, '_')
+            # replace double underscores with single underscores
+            while '__' in yaml_file:
+                yaml_file = yaml_file.replace('__', '_')
+            # yaml must have characters
+            if len(yaml_file) <= 4:
+                emsg = ('Yaml file must be longer than 4 characters and '
+                        'only contain letters, numbers and underscores')
+                print(emsg)
+                continue
             # break loop
             break
-        # replace all punctuation with underscores
-        for char in string.punctuation:
-            yaml_file = yaml_file.replace(char, '_')
-        # replace double underscores with single underscores
-        while '__' in yaml_file:
-            yaml_file = yaml_file.replace('__', '_')
+        # yaml file must end in .yaml
+        if not yaml_file.endswith('.yaml'):
+            yaml_file += '.yaml'
     else:
         yaml_file = args.yaml_file
     # -------------------------------------------------------------------------
@@ -215,9 +219,17 @@ def setup(params: ParamDict):
 
     :return: None
     """
+    # print progress
+    WLOG(params, 'info', params['DRS_HEADER'])
+    WLOG(params, 'info', 'Checking arguments')
+    WLOG(params, 'info', params['DRS_HEADER'])
     # ask user for any missing arguments
     params = ask_user_for_missing_arguments(params)
     # ----------------------------------------------------------------------
+    # print progress
+    WLOG(params, 'info', params['DRS_HEADER'])
+    WLOG(params, 'info', 'Checking paths')
+    WLOG(params, 'info', params['DRS_HEADER'])
     # Create some paths
     for path in PATHS:
         # deal with path not existing in params (skip) - these really should
@@ -226,20 +238,28 @@ def setup(params: ParamDict):
             continue
         # find if path exists
         if os.path.exists(params[path]):
+            WLOG(params, '', 'Path exists: {0}'.format(params[path]))
             continue
         # ask user to create path
-        question = 'Path does not exist: {0}\nWould you like to create it?'
+        question = '\nPath does not exist: {0}\nWould you like to create it?'
         question = question.format(params[path])
         # ask user
         if drs_text.user_input(question, dtype='YN', required=True):
             os.makedirs(params[path])
     # ----------------------------------------------------------------------
+    # print progress
+    WLOG(params, 'info', params['DRS_HEADER'])
+    WLOG(params, 'info', 'Constructing yaml file')
+    WLOG(params, 'info', params['DRS_HEADER'])
     # Get the constants dictionary
     cdict = constants.CDict
     # get the yaml file
     yaml_file = params['YAML_FILE']
+    # print progress
+    msg = 'Saving constants to yaml file: {0}'
+    WLOG(params, '', msg.format(os.path.realpath(yaml_file)))
     # save the constants dictionary to yaml file
-    cdict.save_yaml(params, outpath=yaml_file)
+    cdict.save_yaml(params, outpath=yaml_file, log=False)
 
 
 def ask_user_for_missing_arguments(params: ParamDict):
@@ -263,7 +283,7 @@ def ask_user_for_missing_arguments(params: ParamDict):
         if instance.not_none:
             # loop until we get a valid response from the user
             while True:
-                question = 'Please enter the value for {0}'.format(key)
+                question = '\nPlease enter the value for {0}'.format(key)
                 # loop and ask
                 value = drs_text.user_input(question, dtype=instance.dtype,
                                             options=instance.options,
