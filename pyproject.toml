@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+dynamic = ["version", "dependencies"]
+name = 'uprv'
+authors = [
+    {name = 'Neil Cook', email = 'neil.james.cook@gmail.com'},
+]
+description = 'Run UPRV'
+readme = {file = "README.md", content-type = "text/markdown"}
+license = {file = 'LICENSE'}
+requires-python = ">=3.9"
+
+[project.urls]
+Homepage = 'http://apero.exoplanets.ca'
+Repository = 'https://github.com/njcuk9999/uprv'
+
+[project.scripts]
+uprv_setup = "uprv:recipes.uprv_setup.run"
+uprv_run = "uprv:recipes.uprv_run.run"
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}

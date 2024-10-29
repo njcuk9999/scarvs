@@ -1,0 +1,16 @@
+# python 3.10
+# pip
+
+aperocore @ git+https://github.com/njcuk9999/apero-drs.git@v0.8.003#subdirectory=apero-core
+astropy==5.3
+ipython==8.13.2
+matplotlib==3.7.1
+numba==0.57.0
+numexpr==2.8.4
+numpy==1.24.3
+pandas==2.0.2
+pandastable==0.13.1
+PyYAML==6.0
+scipy==1.10.0
+tqdm==4.65.0
+wget==3.2

@@ -1,0 +1,10 @@
+# Define versionV
+VERSION: 0.1.0001
+# Define date of release
+DATE: 2024-10-29
+# Define release type
+RELEASE: alpha
+# Define authors
+AUTHORS:
+    - N. Cook
+    - E. Artigau

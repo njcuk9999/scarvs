@@ -1,0 +1,279 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+# CODE NAME HERE
+
+# CODE DESCRIPTION HERE
+
+Created on 2024-10-29 at 10:16
+
+@author: cook
+"""
+import argparse
+import os
+from typing import Optional
+
+from aperocore.constants import param_functions
+from aperocore.constants import load_functions
+from aperocore.core import drs_log
+from aperocore.core import drs_text
+
+from uprv.core import base
+from uprv.constants import constants
+from uprv import science
+from uprv import plotting
+
+# =============================================================================
+# Define variables
+# =============================================================================
+__NAME__ = 'uprv.recipes.run.py'
+__PACKAGE__ = base.__PACKAGE__
+__version__ = base.__version__
+__authors__ = base.__authors__
+__date__ = base.__date__
+__release__ = base.__release__
+# get parameter dictionary
+ParamDict = param_functions.ParamDict
+# get the logger
+WLOG = drs_log.wlog
+# Define paths to create
+PATHS = ['DATA_PATH', 'PLOT_PATH']
+
+
+# =============================================================================
+# Define functions
+# =============================================================================
+def get_params(yaml_file: Optional[str] = None,
+               description: str = None,
+               yaml_required: bool = True,
+               from_file: bool = True) -> ParamDict:
+    """
+    Get the parameters (default, command line and function call)
+
+    :param yaml_file:
+    :param description:
+    :param yaml_required:
+    :param from_file:
+    :return:
+    """
+    # get the default arguments
+    params = default_args()
+    # get the yaml file
+    yaml_file = command_line_args(description=description,
+                                  yaml_required=yaml_required,
+                                  yaml_file=yaml_file)
+    # get constants from user config files
+    if from_file:
+        # get instrument user config files
+        largs = [[os.path.realpath(yaml_file)], params.instances]
+        # load keys, values, sources and instances from yaml files
+        ovalues, osources, oinstances = load_functions._load_from_yaml(*largs)
+        # add to params
+        for key in ovalues:
+            # set value
+            params[key] = ovalues[key]
+            # set instance (Const/Keyword instance)
+            params.set_instance(key, oinstances[key])
+            params.set_source(key, osources[key])
+
+    # set the yaml file
+    params['YAML_FILE'] = yaml_file
+
+    # push function definitions into params
+    params['SCIFUNCS'] = science.SCIENCE_FUNCS
+    params['PLOTFUNCS'] = plotting.PLOT_FUNCS
+
+    # make sure we have the minimal log parameters from wlog
+    params = WLOG.minimal_params(params)
+
+    # return params
+    return params
+
+
+def command_line_args(description: str = None,
+                      yaml_required: bool = True,
+                      yaml_file: Optional[str] = None) -> str:
+    """
+    Get the yaml file from the command line
+
+    :param description: str, the description of the command line arguments
+    :param yaml_required: bool, if True the yaml file is required and raises an
+                            exception if it does not exist
+    :param yaml_file: str or None, pre-set the yaml file name
+                      (if None will check command line)
+    :return:
+    """
+    # deal with pre-set yaml file (from function call)
+    if yaml_file is not None:
+        if yaml_required:
+            # deal with no yaml file existing
+            if not os.path.exists(yaml_file):
+                # raise exception
+                emsg = 'Yaml file does not exist: {0}'
+                eargs = [yaml_file]
+                raise base.UPRVException(emsg.format(*eargs))
+        elif isinstance(yaml_file, str):
+            return yaml_file
+    # -------------------------------------------------------------------------
+    # setup argument parser
+    parser = argparse.ArgumentParser(description=description)
+    # add yaml file argument (depends on whether the yaml file is required)
+    parser.add_argument('yaml_file', type=str, help='yaml file to load',
+                            nargs='?', default='None')
+    # parse arguments
+    args = parser.parse_args()
+    # -------------------------------------------------------------------------
+    # deal with no yaml file set from function call or command line arguments
+    # -------------------------------------------------------------------------
+    if args.yaml_file == 'None':
+        question = 'Please enter the yaml file to load:\t'
+        # we always go into here
+        while True:
+            # ask the user for a yaml file
+            yaml_file = input(question)
+            # yaml file cannot have spaces
+            if ' ' in yaml_file:
+                emsg = 'Yaml file cannot have spaces in the name'
+                print(emsg)
+                continue
+            # yaml file must end in .yaml
+            if not yaml_file.endswith('.yaml'):
+                yaml_file += '.yaml'
+            # deal with yaml file being required
+            if yaml_required:
+                # deal with no yaml file existing
+                if not os.path.exists(yaml_file):
+                    # raise exception
+                    emsg = 'Yaml file does not exist: {0}'
+                    eargs = [yaml_file]
+                    print(emsg.format(*eargs))
+                    continue
+            # break loop
+            break
+    else:
+        yaml_file = args.yaml_file
+    # -------------------------------------------------------------------------
+    # deal with no yaml file
+    if yaml_required:
+        # deal with no yaml file existing
+        if not os.path.exists(yaml_file):
+            # raise exception
+            emsg = 'Yaml file does not exist: {0}'
+            eargs = [yaml_file]
+            raise base.UPRVException(emsg.format(*eargs))
+    # return the yaml file
+    return yaml_file
+
+
+def default_args() -> ParamDict:
+    """
+    Get the default arguments
+
+    :return: ParamDict: a dictionary of default arguments
+    """
+    # Get the constants dictionary
+    cdict = constants.CDict
+    # storage for outputs
+    values, sources, instances = dict(), dict(), dict()
+    # load the default values
+    for key in cdict.storage.keys():
+        values[key] = cdict.storage[key].value
+        sources[key] = cdict.storage[key].source
+        instances[key] = cdict.storage[key]
+    # push into a parameter dictionary
+    params = ParamDict(values)
+    # add to params
+    for key in instances:
+        # set source
+        params.set_source(key, sources[key])
+        # set instance (Const/Keyword instance)
+        params.set_instance(key, instances[key])
+    # return the parameters
+    return params
+
+
+def setup(params: ParamDict):
+    """
+    Setup the general module
+
+    :return: None
+    """
+    # ask user for any missing arguments
+    params = ask_user_for_missing_arguments(params)
+    # ----------------------------------------------------------------------
+    # Create some paths
+    for path in PATHS:
+        # deal with path not existing in params (skip) - these really should
+        #    exist though
+        if path not in params:
+            continue
+        # find if path exists
+        if os.path.exists(params[path]):
+            continue
+        # ask user to create path
+        question = 'Path does not exist: {0}\nWould you like to create it?'
+        question = question.format(params[path])
+        # ask user
+        if drs_text.user_input(question, dtype='YN', required=True):
+            os.makedirs(params[path])
+    # ----------------------------------------------------------------------
+    # Get the constants dictionary
+    cdict = constants.CDict
+    # get the yaml file
+    yaml_file = params['YAML_FILE']
+    # save the constants dictionary to yaml file
+    cdict.save_yaml(params, outpath=yaml_file)
+
+
+def ask_user_for_missing_arguments(params: ParamDict):
+    """
+    Ask the user for any missing arguments
+
+    :param params: ParamDict, the parameter dictionary
+    :return: ParamDict, the updated parameter dictionary
+    """
+    # set function name
+    func_name = __NAME__ + '.ask_user_for_missing_arguments()'
+    # set up parameters that are required and currently None in parameters
+    for key in params:
+        # skip if value is not None
+        if params[key] is not None:
+            continue
+        # get the parameter constant instance
+        instance = params.instances[key]
+
+        # see if we have to ask the user for this value
+        if instance.not_none:
+            # loop until we get a valid response from the user
+            while True:
+                question = 'Please enter the value for {0}'.format(key)
+                # loop and ask
+                value = drs_text.user_input(question, dtype=instance.dtype,
+                                            options=instance.options,
+                                            required=True)
+                # validate value
+                try:
+                    value = instance.validate(test_value=value)
+                except Exception as e:
+                    print('Error: {0}'.format(e))
+                    continue
+                # if we get here the value is good
+                break
+            # set the value and source
+            params.set(key, value, source=func_name)
+    # return parameters
+    return params
+
+
+# =============================================================================
+# Start of code
+# =============================================================================
+# Main code here
+if __name__ == "__main__":
+    # ----------------------------------------------------------------------
+    # print 'Hello World!'
+    print("Hello World!")
+
+# =============================================================================
+# End of code
+# =============================================================================

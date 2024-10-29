@@ -1,0 +1,54 @@
+#############################################################################
+# UPRV
+#############################################################################
+#     Version = 0.1.0001
+#     Date    = 2024-10-29
+
+# If using a different version it is recommended to 
+# run uprv_setup.py to generate a new yaml file.
+
+
+
+# =============================================================================
+# global settings (generally don't touch these)
+# =============================================================================
+# Plotting mode: 
+# 	0: No plots
+# 	1: Only show plots 
+# 	2: Only save plots to file 
+# 	3: Show and save plots to file
+# 	Default value: 0
+PLOTTING: 0
+# List of plot types to save (e.g. ['png', 'pdf'])
+# 	Default value: ['png', 'pdf']
+PLOT_TYPES:
+- png
+- pdf
+# Show debug messages
+# 	Default value: False
+DEBUG: false
+
+
+# =============================================================================
+# Definition of inputs related to the data
+# =============================================================================
+# The data directory (required)
+DATA_PATH: /scratch2/other/prv/data
+# Plot path (required)
+PLOT_PATH: /scratch2/other/prv/plots
+
+
+# =============================================================================
+# run science functions
+# =============================================================================
+# Run test science function (false by default) -- can remove
+# 	Default value: False
+RUNSCI_TEST: false
+
+
+# =============================================================================
+# run plotting functions
+# =============================================================================
+# Run test plotting function (false by default) -- can remove
+# 	Default value: False
+RUNPLOT_TEST: false
