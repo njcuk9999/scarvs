@@ -68,3 +68,7 @@ def test(params: ParamDict):
     core.show(params)
     core.close()
 ```
+
+
+You can import the plotting directory in science functions but never import 
+any science functions into the plotting directory.

@@ -31,3 +31,6 @@ CDict.add('RUNSCI_TEST', value=False, dtype=bool,
           active=True, group=cgroup,
           description='Run test science function')
 ```
+
+You can import the plotting directory in science functions but never import 
+any science functions into the plotting directory.

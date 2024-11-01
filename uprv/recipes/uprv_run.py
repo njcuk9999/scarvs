@@ -44,7 +44,7 @@ def main(yaml_file: Optional[str] = None):
             # log the we are running a function
             general.log_run(params, science_func, 'SCIENCE')
             # run the science function
-            params['SCIFUNCS'][science_func](params)
+            params = params['SCIFUNCS'][science_func](params)
     # run plotting functions
     for plot_func in params['PLOTFUNCS']:
         # check whether we should run this function then run it
@@ -52,7 +52,7 @@ def main(yaml_file: Optional[str] = None):
             # log the we are running a function
             general.log_run(params, plot_func, 'PLOTTING')
             # run the plotting function
-            params['PLOTFUNCS'][plot_func](params)
+            params = params['PLOTFUNCS'][plot_func](params)
     # print splash
     general.end_splash()
 
