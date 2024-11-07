@@ -236,6 +236,8 @@ def setup(params: ParamDict):
         #    exist though
         if path not in params:
             continue
+        # convert path to a real absolute path
+        params[path] = os.path.abspath(params[path])
         # find if path exists
         if os.path.exists(params[path]):
             WLOG(params, '', 'Path exists: {0}'.format(params[path]))
