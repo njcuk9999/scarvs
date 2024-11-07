@@ -12,12 +12,12 @@ Created on 2024-10-29 at 10:16
 from aperocore.constants import param_functions
 from aperocore.core import drs_log
 
-from uprv.core import base
+from scarvs.core import base
 
 # =============================================================================
 # Define variables
 # =============================================================================
-__NAME__ = 'uprv.core.general.py'
+__NAME__ = 'scarvs.core.general.py'
 __PACKAGE__ = base.__PACKAGE__
 __version__ = base.__version__
 __authors__ = base.__authors__
@@ -54,7 +54,7 @@ def check_run(params: ParamDict, func_name: str, func_kind: str) -> bool:
         path = 'plotting.__init__'
     else:
         emsg = f'Function kind "{func_kind}" not recognized'
-        raise base.UPRVException(emsg)
+        raise base.SCARVSException(emsg)
     # deal with func name not in dictionary (shouldn't happen)
     if func_name not in params[dictname]:
         wmsg = f'Function "{func_name}" not found in {path}.{dictname}'

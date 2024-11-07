@@ -14,13 +14,13 @@ import matplotlib.pyplot as plt
 from aperocore.constants import param_functions
 from aperocore.core import drs_log
 
-from uprv.core import base
-from uprv.plotting import core
+from scarvs.core import base
+from scarvs.plotting import core
 
 # =============================================================================
 # Define variables
 # =============================================================================
-__NAME__ = 'uprv.plotting.test.py'
+__NAME__ = 'scarvs.plotting.test.py'
 __PACKAGE__ = base.__PACKAGE__
 __version__ = base.__version__
 __authors__ = base.__authors__
@@ -35,12 +35,13 @@ WLOG = drs_log.wlog
 # =============================================================================
 # Define functions
 # =============================================================================
-def test(params: ParamDict):
+def test(params: ParamDict) -> ParamDict:
     """
     First argument must be params
 
     :param params: ParamDict, the parameter dictionary of constants
-    :return:
+
+    :return params: ParamDict, the parameter dictionary of constants
     """
     # make a graph
     fig, frame = plt.subplots(ncols=1, nrows=1)
@@ -51,6 +52,9 @@ def test(params: ParamDict):
     core.save(params, outname='test_plot')
     core.show(params)
     core.close()
+    # -------------------------------------------------------------------------
+    # always return params (for use elsewhere)
+    return params
 
 
 # =============================================================================

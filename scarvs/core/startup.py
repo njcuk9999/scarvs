@@ -19,15 +19,15 @@ from aperocore.constants import load_functions
 from aperocore.core import drs_log
 from aperocore.core import drs_text
 
-from uprv.core import base
-from uprv.constants import constants
-from uprv import science
-from uprv import plotting
+from scarvs.core import base
+from scarvs.constants import constants
+from scarvs import science
+from scarvs import plotting
 
 # =============================================================================
 # Define variables
 # =============================================================================
-__NAME__ = 'uprv.recipes.run.py'
+__NAME__ = 'scarvs.recipes.run.py'
 __PACKAGE__ = base.__PACKAGE__
 __version__ = base.__version__
 __authors__ = base.__authors__
@@ -116,7 +116,7 @@ def command_line_args(description: str = None,
                 # raise exception
                 emsg = 'Yaml file does not exist: {0}'
                 eargs = [yaml_file]
-                raise base.UPRVException(emsg.format(*eargs))
+                raise base.SCARVSException(emsg.format(*eargs))
         # make sure yaml file is a string
         if isinstance(yaml_file, str):
             return yaml_file
@@ -181,7 +181,7 @@ def command_line_args(description: str = None,
             # raise exception
             emsg = 'Yaml file does not exist: {0}'
             eargs = [yaml_file]
-            raise base.UPRVException(emsg.format(*eargs))
+            raise base.SCARVSException(emsg.format(*eargs))
     # return the yaml file
     return yaml_file
 

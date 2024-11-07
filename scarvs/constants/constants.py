@@ -12,12 +12,12 @@ Created on 2024-10-29 at 09:30
 
 from aperocore.constants import constant_functions
 
-from uprv.core import base
+from scarvs.core import base
 
 # =============================================================================
 # Define variables
 # =============================================================================
-__NAME__ = 'uprv.constants.constants.py'
+__NAME__ = 'scarvs.constants.constants.py'
 __PACKAGE__ = base.__PACKAGE__
 __version__ = base.__version__
 __authors__ = base.__authors__
@@ -29,14 +29,14 @@ Const = constant_functions.Const
 CDict = constant_functions.ConstantsDict(__NAME__)
 
 # set the title for output yaml files
-CDict.title = CDict.yaml_title('UPRV', setup_program='uprv_setup.py',
+CDict.title = CDict.yaml_title('SCARVS', setup_program='scarvs_setup.py',
                                version=__version__, date=__date__)
 
 
 # =============================================================================
 # global settings (generally don't touch these)
 # =============================================================================
-cgroup = 'UPRV.GLOBAL'
+cgroup = 'SCARVS.GLOBAL'
 CDict.add_group(cgroup, description='global settings (generally '
                                     'don\'t touch these)')
 
@@ -71,7 +71,7 @@ CDict.add('DEBUG', value=False, dtype=bool,
 # =============================================================================
 # path settings (generally don't touch these)
 # =============================================================================
-cgroup = 'UPRV.PATHS'
+cgroup = 'SCARVS.PATHS'
 CDict.add_group(cgroup, description='Definition of inputs related to the data')
 
 # Define data path
@@ -89,11 +89,11 @@ CDict.add('PLOT_PATH', value=None, dtype=str,
 # =============================================================================
 # run science functions
 # =============================================================================
-# Note these must match the definitions in uprv/science/__init__.py
+# Note these must match the definitions in scarvs/science/__init__.py
 # i.e. if you add a new function call TEST to SCIENCE_FUNCS
 #      you must add RUNSCI_TEST to the constants here
 # =============================================================================
-cgroup = 'UPRV.SCIENCE'
+cgroup = 'SCARVS.SCIENCE'
 CDict.add_group(cgroup, description='run science functions')
 
 # The science function dictionary (empty on definition)
@@ -113,11 +113,11 @@ CDict.add('RUNSCI_TEST', value=False, dtype=bool,
 # =============================================================================
 # run plot functions
 # =============================================================================
-# Note these must match the definitions in uprv/plotting/__init__.py
+# Note these must match the definitions in scarvs/plotting/__init__.py
 # i.e. if you add a new function call TEST to PLOT_FUNCS
 #      you must add RUNPLOT_TEST to the constants here
 # =============================================================================
-cgroup = 'UPRV.PLOTTING'
+cgroup = 'SCARVS.PLOTTING'
 CDict.add_group(cgroup, description='run plotting functions')
 
 # The plotting function dictionary (empty on definition)

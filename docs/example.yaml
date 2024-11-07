@@ -1,11 +1,11 @@
 #############################################################################
-# UPRV
+# SCARVS
 #############################################################################
 #     Version = 0.1.0001
 #     Date    = 2024-10-29
 
 # If using a different version it is recommended to 
-# run uprv_setup.py to generate a new yaml file.
+# run scarvs_setup.py to generate a new yaml file.
 
 
 

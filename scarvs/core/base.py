@@ -35,7 +35,7 @@ __release__ = __YAML__['RELEASE']
 # =============================================================================
 # Base functionality
 # =============================================================================
-class UPRVException(Exception):
+class SCARVSException(Exception):
     def __init__(self, message):
         super().__init__(message)
 

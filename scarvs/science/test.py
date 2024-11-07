@@ -12,12 +12,13 @@ Created on 2024-10-29 at 09:49
 from aperocore.constants import param_functions
 from aperocore.core import drs_log
 
-from uprv.core import base
+from scarvs.core import base
+from scarvs.plotting import core
 
 # =============================================================================
 # Define variables
 # =============================================================================
-__NAME__ = 'uprv.plotting.test.py'
+__NAME__ = 'scarvs.plotting.test.py'
 __PACKAGE__ = base.__PACKAGE__
 __version__ = base.__version__
 __authors__ = base.__authors__
@@ -32,12 +33,13 @@ WLOG = drs_log.wlog
 # =============================================================================
 # Define functions
 # =============================================================================
-def test(params: ParamDict):
+def test(params: ParamDict) -> ParamDict:
     """
     First argument must be params
 
     :param params: ParamDict, the parameter dictionary of constants
-    :return:
+
+    :return params: ParamDict, the parameter dictionary of constants
     """
     # print a message for this function
     WLOG(params, 'info', 'This is a test function')
@@ -51,8 +53,9 @@ def test(params: ParamDict):
             msg = 'Key = {0}, Value = {1}, Source = {2}'
             margs = [key, params[key], params.sources[key]]
             WLOG(params, '', msg.format(*margs), wrap=False)
-    # return nothing
-    return
+    # -------------------------------------------------------------------------
+    # always return params (for use elsewhere)
+    return params
 
 
 # =============================================================================
