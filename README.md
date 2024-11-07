@@ -1,4 +1,8 @@
-# The uprv module
+# SCARVS: Statistical tools for Combined Analysis of Radial Velocity Signals
+
+---
+
+<img src="scarvs/resources/scarvs_logo.png" alt="scarvs logo" width="400"/>
 
 ## Contents
 
@@ -20,7 +24,7 @@ Insert text here
 #### Step 1: Clone the repository
 
 ```bash
-git clone git@github.com:njcuk9999/uprv.git
+git clone git@github.com:njcuk9999/scarvs.git
 ```
 
 #### Step 2: Install python 3.10 
@@ -30,20 +34,20 @@ Create a conda or python environment
 e.g.
 
 ```bash 
-conda create --name uprv-env python=3.10
-conda activate uprv-env
+conda create --name scarvs-env python=3.10
+conda activate scarvs-env
 ```
 
-#### Step 3: Install uprv
+#### Step 3: Install scarvs
 
 ```bash
-cd {UPRV_ROOT}
+cd {SCARVS_ROOT}
 pip install -U -e .
 ```
 
 Note on can also use venv (instead of conda)
 
-Note `{UPRV_ROOT}` is the path to the cloned github repository (i.e. /path/to/uprv)
+Note `{SCARVS_ROOT}` is the path to the cloned github repository (i.e. /path/to/scarvs)
 
 [Back to top](#contents)
 
@@ -51,14 +55,14 @@ Note `{UPRV_ROOT}` is the path to the cloned github repository (i.e. /path/to/up
 
 ## Setup
 
-First [install uprv](#installation).
-Once you've done this activate the environment you installed uprv in.
-(e.g. `conda activate uprv-env`)
+First [install scarvs](#installation).
+Once you've done this activate the environment you installed scarvs in.
+(e.g. `conda activate scarvs-env`)
 
-To setup UPRV, you need to run the following command:
+To setup SCARVS, you need to run the following command:
 
 ```bash
-uprv_setup {yaml_file}
+scarvs_setup {yaml_file}
 ```
 
 where `yaml_file` is the yaml file you wish to create (if left blank you 
@@ -74,13 +78,13 @@ will be asked for one).
 
 ### Command line
 
-To run UPRV, you need activate the environemnt you installed uprv in.
-(e.g. `conda activate uprv-env`)
+To run SCARVS, you need activate the environemnt you installed scarvs in.
+(e.g. `conda activate scarvs-env`)
 
 Then you need to run the following command:
 
 ```bash
-uprv_run {yaml_file}
+scarvs_run {yaml_file}
 ```
 
 [Back to top](#contents)
@@ -89,16 +93,16 @@ uprv_run {yaml_file}
 
 ### Inside Python/Notebooks
 
-To run UPRV inside python, you need to import the uprv module:
+To run SCARVS inside python, you need to import the scarvs module:
 
 ```python
-from uprv.recipes import uprv_run
+from scarvs.recipes import scarvs_run
 
 # define the path to your yaml file
 yaml_file = '/path/to/yaml_file.yaml'
 
-# run uprv
-uprv_run.main(yaml_file)
+# run scarvs
+scarvs_run.main(yaml_file)
 ```
 
 ### Overriding parameters
@@ -108,8 +112,8 @@ as follows:
 
 ```python
 
-from uprv.core import startup
-from uprv.core import general
+from scarvs.core import startup
+from scarvs.core import general
 
 # define the path to your yaml file
 yaml_file = '/path/to/yaml_file.yaml'
@@ -123,7 +127,7 @@ params['DATA_DIR'] = '/path/to/data'
 params['PLOT_DIR'] = '/path/to/plots'
 
 # --------------------------------------------------------------
-# Then use the following to run uprv
+# Then use the following to run scarvs
 # ---------------------------------------------------------------
     # run science functions
     for science_func in params['SCIFUNCS']:
@@ -150,7 +154,7 @@ params['PLOT_DIR'] = '/path/to/plots'
 To run an individual function, you can call the dictionary and run the function
 
 ```python
-from uprv.core import startup
+from scarvs.core import startup
 
 # define the path to your yaml file
 yaml_file = '/path/to/yaml_file.yaml'
@@ -164,7 +168,7 @@ params['SCIFUNCS']['TEST'](params)
 params['PLOTFUNCS']['TEST'](params)
 ```
 
-A note book and yaml example are provided in the uprv/docs directory.
+A note book and yaml example are provided in the scarvs/docs directory.
 
 
 [Back to top](#contents)

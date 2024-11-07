@@ -5,22 +5,22 @@ build-backend = "setuptools.build_meta"
 
 [project]
 dynamic = ["version", "dependencies"]
-name = 'uprv'
+name = 'scarvs'
 authors = [
     {name = 'Neil Cook', email = 'neil.james.cook@gmail.com'},
 ]
-description = 'Run UPRV'
+description = 'Statistical tools for Combined Analysis of Radial Velocity Signals'
 readme = {file = "README.md", content-type = "text/markdown"}
 license = {file = 'LICENSE'}
 requires-python = ">=3.9"
 
 [project.urls]
 Homepage = 'http://apero.exoplanets.ca'
-Repository = 'https://github.com/njcuk9999/uprv'
+Repository = 'https://github.com/njcuk9999/scarvs'
 
 [project.scripts]
-uprv_setup = "uprv:recipes.uprv_setup.run"
-uprv_run = "uprv:recipes.uprv_run.run"
+scarvs_setup = "scarvs:recipes.scarvs_setup.run"
+scarvs_run = "scarvs:recipes.scarvs_run.run"
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}

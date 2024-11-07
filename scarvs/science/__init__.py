@@ -9,7 +9,7 @@ Created on 2024-10-29 at 09:29
 
 @author: cook
 """
-from uprv.science import test
+from scarvs.science import test
 
 
 # =============================================================================

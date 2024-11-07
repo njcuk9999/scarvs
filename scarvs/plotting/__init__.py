@@ -5,21 +5,21 @@
 
 # CODE DESCRIPTION HERE
 
-Created on 2024-10-29 at 09:30
+Created on 2024-10-29 at 09:29
 
 @author: cook
 """
-from uprv.core import base
+from scarvs.plotting import test
+
 
 # =============================================================================
 # Define variables
 # =============================================================================
-__NAME__ = 'uprv.core.startup.py'
-__PACKAGE__ = base.__PACKAGE__
-__version__ = base.__version__
-__authors__ = base.__authors__
-__date__ = base.__date__
-__release__ = base.__release__
+# a dictionary of plotting functions
+PLOT_FUNCS = dict()
+
+# Test science function
+PLOT_FUNCS['TEST'] = test.test
 
 
 # =============================================================================

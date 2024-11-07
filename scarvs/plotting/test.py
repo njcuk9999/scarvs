@@ -9,16 +9,18 @@ Created on 2024-10-29 at 09:49
 
 @author: cook
 """
+import matplotlib.pyplot as plt
+
 from aperocore.constants import param_functions
 from aperocore.core import drs_log
 
-from uprv.core import base
-from uprv.plotting import core
+from scarvs.core import base
+from scarvs.plotting import core
 
 # =============================================================================
 # Define variables
 # =============================================================================
-__NAME__ = 'uprv.plotting.test.py'
+__NAME__ = 'scarvs.plotting.test.py'
 __PACKAGE__ = base.__PACKAGE__
 __version__ = base.__version__
 __authors__ = base.__authors__
@@ -41,18 +43,15 @@ def test(params: ParamDict) -> ParamDict:
 
     :return params: ParamDict, the parameter dictionary of constants
     """
-    # print a message for this function
-    WLOG(params, 'info', 'This is a test function')
-    # loop around keys in params and print them
-    for key in params:
-        if key in ['SCIFUNCS', 'PLOTFUNCS']:
-            msg = 'Current defined {0} functions are:\n\t'.format(key)
-            msg += '\n\t'.join(list(params[key].keys()))
-            WLOG(params, '', msg, wrap=False)
-        else:
-            msg = 'Key = {0}, Value = {1}, Source = {2}'
-            margs = [key, params[key], params.sources[key]]
-            WLOG(params, '', msg.format(*margs), wrap=False)
+    # make a graph
+    fig, frame = plt.subplots(ncols=1, nrows=1)
+    # plot the frame
+    frame.plot([1, 2, 3, 4], [1, 4, 9, 16])
+    # -------------------------------------------------------------------------
+    # deal with saving (do not remove)
+    core.save(params, outname='test_plot')
+    core.show(params)
+    core.close()
     # -------------------------------------------------------------------------
     # always return params (for use elsewhere)
     return params

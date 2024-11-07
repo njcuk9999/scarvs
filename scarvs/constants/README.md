@@ -54,7 +54,7 @@ To do this you can add a "section" as follows:
 
 ```python
 
-cgroup = 'UPRV.GLOBAL'
+cgroup = 'SCARVS.GLOBAL'
 CDict.add_group(cgroup, description='global settings (generally '
                                     'don\'t touch these)')
 
@@ -70,7 +70,7 @@ The following code is an example:
 # =============================================================================
 # path settings (generally don't touch these)
 # =============================================================================
-cgroup = 'UPRV.PATHS'
+cgroup = 'SCARVS.PATHS'
 CDict.add_group(cgroup, description='Definition of inputs related to the data')
 
 # Define data path

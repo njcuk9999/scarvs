@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-# CODE NAME HERE
+Core plotting functions (i.e. general plotting functions used in multiple
+other plotting functions)
 
-# CODE DESCRIPTION HERE
+Do not import individual plotting functions in here (i.e. do not import
+functions defined in PLOT_FUNCS)
 
 Created on 2024-10-29 at 09:57
 
@@ -16,12 +18,12 @@ import matplotlib.pyplot as plt
 
 from aperocore.constants import param_functions
 from aperocore.core import drs_log
-from uprv.core import base
+from scarvs.core import base
 
 # =============================================================================
 # Define variables
 # =============================================================================
-__NAME__ = 'uprv.plotting.core.py'
+__NAME__ = 'scarvs.plotting.core.py'
 __PACKAGE__ = base.__PACKAGE__
 __version__ = base.__version__
 __authors__ = base.__authors__

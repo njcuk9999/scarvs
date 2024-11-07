@@ -5,7 +5,7 @@ This directory contains any science codes.
 To be able to use them please add them to the sciece.__init__.py file as follows:
 
 ```python
-from uprv.plotting import test
+from scarvs.plotting import test
 
 # a dictionary of science functions
 PLOT_FUNCS = dict()
@@ -20,7 +20,7 @@ You can add as many function as you like from a single file or from multiple fil
 
 Please add a comment to the function to describe what it does.
 
-You must also add a `RUNPLOT_{MYFUNC}` to the `uprv.constants.constants.py` file.
+You must also add a `RUNPLOT_{MYFUNC}` to the `scarvs.constants.constants.py` file.
 
 e.g.
 
@@ -42,7 +42,7 @@ We want to do this in a uniform way. Please use functions similar to the followi
 import matplotlib.pyplot as plt
 
 from aperocore.constants import param_functions
-from uprv.plotting import core
+from scarvs.plotting import core
 
 # =============================================================================
 # Define variables
