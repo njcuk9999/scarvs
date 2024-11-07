@@ -45,14 +45,21 @@ def test(params: ParamDict) -> ParamDict:
     WLOG(params, 'info', 'This is a test function')
     # loop around keys in params and print them
     for key in params:
-        if key in ['SCIFUNCS', 'PLOTFUNCS']:
-            msg = 'Current defined {0} functions are:\n\t'.format(key)
-            msg += '\n\t'.join(list(params[key].keys()))
-            WLOG(params, '', msg, wrap=False)
-        else:
-            msg = 'Key = {0}, Value = {1}, Source = {2}'
-            margs = [key, params[key], params.sources[key]]
+        # skip parameters without an instance
+        if params.instances[key] is None:
+            continue
+        # print parameters flagged as for the user
+        if params.instances[key].user:
+            msg = 'Key = {0}, Value = {1}'
+            margs = [key, params[key]]
             WLOG(params, '', msg.format(*margs), wrap=False)
+
+    # handle special cases
+    for key in ['SCIFUNCS', 'PLOTFUNCS']:
+        msg = 'Current defined {0} functions are:\n\t'.format(key)
+        msg += '\n\t'.join(list(params[key].keys()))
+        WLOG(params, '', msg, wrap=False)
+        continue
     # -------------------------------------------------------------------------
     # always return params (for use elsewhere)
     return params
