@@ -19,7 +19,6 @@ numba==0.57.0
 numexpr==2.8.4
 numpy==1.24.3
 numpyro==0.15.3
-orbitize==3.1.0
 pandas==2.2.3
 pandastable==0.13.1
 radvel==1.4.11
