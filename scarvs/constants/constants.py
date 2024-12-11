@@ -26,7 +26,8 @@ __release__ = base.__release__
 
 # Constants definition
 Const = constant_functions.Const
-CDict = constant_functions.ConstantsDict(__NAME__)
+ConstDict = constant_functions.ConstantsDict
+CDict = ConstDict(__NAME__)
 
 # set the title for output yaml files
 CDict.title = CDict.yaml_title('SCARVS', setup_program='scarvs_setup.py',
@@ -40,13 +41,19 @@ cgroup = 'SCARVS.GLOBAL'
 CDict.add_group(cgroup, description='global settings (generally '
                                     'don\'t touch these)')
 
+
+CDict_global = ConstDict(cgroup)
+CDict.add('GLOBAL', value=CDict_global, dtype=ConstDict,
+          source=__NAME__, user=True,
+          active=True, group=cgroup, description='')
+
 # Yaml file
-CDict.add('YAML_FILE', value=None, dtype=str, source=__NAME__, user=False,
+CDict_global.add('YAML_FILE', value=None, dtype=str, source=__NAME__, user=False,
           active=False, group=cgroup,
           description='Yaml file used')
 
 # Plotting mode (0-3)
-CDict.add('PLOTTING', value=0, dtype=int,
+CDict_global.add('PLOTTING', value=0, dtype=int,
           source=__NAME__, user=True,
           active=True, group=cgroup, options=[0, 1, 2, 3],
           description='Plotting mode: '
@@ -56,13 +63,13 @@ CDict.add('PLOTTING', value=0, dtype=int,
                       '\n\t3: Show and save plots to file')
 
 # Plotting types
-CDict.add('PLOT_TYPES', value=['png', 'pdf'], dtype=list,
+CDict_global.add('PLOT_TYPES', value=['png', 'pdf'], dtype=list,
           source=__NAME__, user=True,
           active=True, group=cgroup,
           description='List of plot types to save (e.g. [\'png\', \'pdf\'])')
 
 # Debug mode
-CDict.add('DEBUG', value=False, dtype=bool,
+CDict_global.add('DEBUG', value=False, dtype=bool,
           source=__NAME__, user=True,
           active=True, group=cgroup,
           description='Show debug messages')

@@ -59,7 +59,7 @@ def get_params(yaml_file: Optional[str] = None,
     :return:
     """
     # get the default arguments
-    params = default_args()
+    params = load_functions.load_parameters([constants.CDict])
     # set name
     if name is not None:
         params['RECIPE_SHORT'] = name
@@ -82,7 +82,7 @@ def get_params(yaml_file: Optional[str] = None,
             params.set_source(key, osources[key])
 
     # set the yaml file
-    params['YAML_FILE'] = yaml_file
+    params['GLOBAL']['YAML_FILE'] = yaml_file
 
     # push function definitions into params
     params['SCIFUNCS'] = science.SCIENCE_FUNCS
@@ -186,32 +186,6 @@ def command_line_args(description: str = None,
     return yaml_file
 
 
-def default_args() -> ParamDict:
-    """
-    Get the default arguments
-
-    :return: ParamDict: a dictionary of default arguments
-    """
-    # Get the constants dictionary
-    cdict = constants.CDict
-    # storage for outputs
-    values, sources, instances = dict(), dict(), dict()
-    # load the default values
-    for key in cdict.storage.keys():
-        values[key] = cdict.storage[key].value
-        sources[key] = cdict.storage[key].source
-        instances[key] = cdict.storage[key]
-    # push into a parameter dictionary
-    params = ParamDict(values)
-    # add to params
-    for key in instances:
-        # set source
-        params.set_source(key, sources[key])
-        # set instance (Const/Keyword instance)
-        params.set_instance(key, instances[key])
-    # return the parameters
-    return params
-
 
 def setup(params: ParamDict):
     """
@@ -256,7 +230,7 @@ def setup(params: ParamDict):
     # Get the constants dictionary
     cdict = constants.CDict
     # get the yaml file
-    yaml_file = params['YAML_FILE']
+    yaml_file = params['GLOBAL']['YAML_FILE']
     # print progress
     msg = 'Saving constants to yaml file: {0}'
     WLOG(params, '', msg.format(os.path.realpath(yaml_file)))
