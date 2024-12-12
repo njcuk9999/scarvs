@@ -72,7 +72,7 @@ def get_params(yaml_file: Optional[str] = None,
         # get instrument user config files
         largs = [[os.path.realpath(yaml_file)], params.instances]
         # load keys, values, sources and instances from yaml files
-        ovalues, osources, oinstances = load_functions._load_from_yaml(*largs)
+        ovalues, osources, oinstances = load_functions.load_from_yaml(*largs)
         # add to params
         for key in ovalues:
             # set value

@@ -40,8 +40,6 @@ CDict.title = CDict.yaml_title('SCARVS', setup_program='scarvs_setup.py',
 cgroup = 'SCARVS.GLOBAL'
 CDict.add_group(cgroup, description='global settings (generally '
                                     'don\'t touch these)')
-
-
 CDict_global = ConstDict(cgroup)
 CDict.add('GLOBAL', value=CDict_global, dtype=ConstDict,
           source=__NAME__, user=True,
