@@ -17,7 +17,7 @@ import yaml
 # =============================================================================
 # Define variables
 # =============================================================================
-__PACKAGE__ = 'aperocore'
+__PACKAGE__ = 'scarvs'
 __PATH__ = Path(__file__).parent.parent
 __INSTRUMENT__ = 'None'
 # load the yaml file
