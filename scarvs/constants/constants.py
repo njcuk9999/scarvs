@@ -44,7 +44,10 @@ CDict.add_group(cgroup, description='global settings (generally '
 
 # Yaml file
 CDict.add('YAML_FILE', value=None, dtype=str, source=__NAME__, user=False,
-          active=False, group=cgroup,
+          active=False, group=cgroup, not_none=True,
+          cmd_arg='yamlfile',
+          cmd_kwargs=dict(nargs='?', type=str, default=None,
+                          action='store'),
           description='Yaml file used')
 
 # Plotting mode (0-3)
@@ -96,7 +99,7 @@ CDict.add('PLOT_PATH', value=None, dtype=str,
 # i.e. if you add a new function call TEST to SCIENCE_FUNCS
 #      you must add RUNSCI_TEST to the constants here
 # =============================================================================
-cgroup = 'SCARVS.SCIENCE'
+cgroup = 'SCIENCE'
 CDict.add_group(cgroup, description='run science functions')
 
 # The science function dictionary (empty on definition)
@@ -120,7 +123,7 @@ CDict.add('RUNSCI_TEST', value=False, dtype=bool,
 # i.e. if you add a new function call TEST to PLOT_FUNCS
 #      you must add RUNPLOT_TEST to the constants here
 # =============================================================================
-cgroup = 'SCARVS.PLOTTING'
+cgroup = 'PLOTTING'
 CDict.add_group(cgroup, description='run plotting functions')
 
 # The plotting function dictionary (empty on definition)

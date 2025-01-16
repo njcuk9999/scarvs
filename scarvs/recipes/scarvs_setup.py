@@ -41,6 +41,7 @@ def main(**kwargs):
                                            description=__description__,
                                            inputargs=__inputs__,
                                            param_file_path='GLOBAL.YAML_FILE',
+                                           from_file=False,
                                            config_list=[CDict],
                                            kwargs=kwargs)
     # setup using parameters

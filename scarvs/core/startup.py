@@ -60,7 +60,7 @@ def get_params(name: str, description: str = None, inputargs: List[str] = None,
     params = load_functions.get_all_params(name=name,
                                            description=description,
                                            inputargs=inputargs,
-                                           param_file_path='INPUTS.PARAM_FILE',
+                                           param_file_path='GLOBAL.YAML_FILE',
                                            config_list=[constants.CDict],
                                            from_file=from_file,
                                            kwargs=kwargs)
@@ -208,7 +208,7 @@ def setup(params: ParamDict):
     # Get the constants dictionary
     cdict = constants.CDict
     # get the yaml file
-    yaml_file = params['GLOBAL']['YAML_FILE']
+    yaml_file = params['GLOBAL.YAML_FILE']
     # print progress
     msg = 'Saving constants to yaml file: {0}'
     WLOG(params, '', msg.format(os.path.realpath(yaml_file)))
