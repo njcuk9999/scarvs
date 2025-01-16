@@ -10,6 +10,7 @@
 - [Installation](#installation)
 - [Setup](#setup)
 - [Usage](#usage)
+- [Dev mode](#dev-mode)
 
 [Back to top](#contents)
 
@@ -174,3 +175,16 @@ A note book and yaml example are provided in the scarvs/docs directory.
 [Back to top](#contents)
 
 ---
+
+## Dev mode
+[Back to top](#contents)
+
+For dev mode (editable install of both apero-core and scarvs please run the following:
+
+```bash
+git clone git@github.com:njcuk9999/scarvs.git
+git clone git@github.com:njcuk9999/apero-drs.git
+
+pip install -U -e ./apero-drs/apero-core
+pip install -U -e ./scarvs[dev]
+```

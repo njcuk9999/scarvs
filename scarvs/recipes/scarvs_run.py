@@ -26,17 +26,17 @@ __date__ = base.__date__
 __release__ = base.__release__
 # set description
 __description__ = 'Setup the SCARVS recipes'
-
+__inputs__ = ['GLOBAL.YAML_FILE']
 
 # =============================================================================
 # Define functions
 # =============================================================================
-def main(yaml_file: Optional[str] = None):
+def main(**kwargs):
     # print splash
     general.start_splash('SCARVS Run')
     # get parameters
-    params = startup.get_params(yaml_file, description=__description__,
-                                name='RUN')
+    params = startup.get_params(name='run', description=__description__,
+                                inputargs=__inputs__, kwargs=kwargs)
     # run science functions
     for science_func in params['SCIFUNCS']:
         # check whether we should run this function then run it

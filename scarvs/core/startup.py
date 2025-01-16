@@ -12,7 +12,7 @@ Created on 2024-10-29 at 10:16
 import argparse
 import os
 import string
-from typing import Optional
+from typing import List, Optional
 
 from aperocore.constants import param_functions
 from aperocore.constants import load_functions
@@ -44,11 +44,8 @@ PATHS = ['DATA_PATH', 'PLOT_PATH']
 # =============================================================================
 # Define functions
 # =============================================================================
-def get_params(yaml_file: Optional[str] = None,
-               description: str = None,
-               yaml_required: bool = True,
-               from_file: bool = True,
-               name: Optional[str] = None) -> ParamDict:
+def get_params(name: str, description: str = None, inputargs: List[str] = None,
+               from_file: bool = True, **kwargs) -> ParamDict:
     """
     Get the parameters (default, command line and function call)
 
@@ -58,39 +55,20 @@ def get_params(yaml_file: Optional[str] = None,
     :param from_file:
     :return:
     """
-    # get the default arguments
-    params = load_functions.load_parameters([constants.CDict])
-    # set name
-    if name is not None:
-        params['RECIPE_SHORT'] = name
-    # get the yaml file
-    yaml_file = command_line_args(description=description,
-                                  yaml_required=yaml_required,
-                                  yaml_file=yaml_file)
-    # get constants from user config files
-    if from_file:
-        # get instrument user config files
-        largs = [[os.path.realpath(yaml_file)], params.instances]
-        # load keys, values, sources and instances from yaml files
-        ovalues, osources, oinstances = load_functions.load_from_yaml(*largs)
-        # add to params
-        for key in ovalues:
-            # set value
-            params[key] = ovalues[key]
-            # set instance (Const/Keyword instance)
-            params.set_instance(key, oinstances[key])
-            params.set_source(key, osources[key])
-
-    # set the yaml file
-    params['GLOBAL']['YAML_FILE'] = yaml_file
-
+    # -------------------------------------------------------------------------
+    # get parameters
+    params = load_functions.get_all_params(name=name,
+                                           description=description,
+                                           inputargs=inputargs,
+                                           param_file_path='INPUTS.PARAM_FILE',
+                                           config_list=[constants.CDict],
+                                           from_file=from_file,
+                                           kwargs=kwargs)
+    # ask user for any missing arguments
+    params = load_functions.ask_for_missing_args(params)
     # push function definitions into params
     params['SCIFUNCS'] = science.SCIENCE_FUNCS
     params['PLOTFUNCS'] = plotting.PLOT_FUNCS
-
-    # make sure we have the minimal log parameters from wlog
-    params = WLOG.minimal_params(params)
-
     # return params
     return params
 

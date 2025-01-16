@@ -9,11 +9,13 @@ Created on 2024-10-29 at 09:32
 
 @author: cook
 """
-from typing import Optional
+from aperocore.core import drs_log
+from aperocore.constants import load_functions
 
+from scarvs.constants.constants import CDict
 from scarvs.core import base
-from scarvs.core import startup
 from scarvs.core import general
+from scarvs.core import startup
 
 # =============================================================================
 # Define variables
@@ -26,16 +28,21 @@ __date__ = base.__date__
 __release__ = base.__release__
 # set description
 __description__ = 'Setup the SCARVS recipes'
+__inputs__ = ['GLOBAL.YAML_FILE']
 
 # =============================================================================
 # Define functions
 # =============================================================================
-def main():
+def main(**kwargs):
     # print splash
     general.start_splash('SCARVS Setup')
     # get parameters
-    params = startup.get_params(yaml_required=False, from_file=False,
-                                description=__description__, name='SETUP')
+    params = load_functions.get_all_params(name=__NAME__,
+                                           description=__description__,
+                                           inputargs=__inputs__,
+                                           param_file_path='GLOBAL.YAML_FILE',
+                                           config_list=[CDict],
+                                           kwargs=kwargs)
     # setup using parameters
     startup.setup(params)
     # print splash
