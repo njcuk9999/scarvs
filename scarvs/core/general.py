@@ -47,11 +47,13 @@ def check_run(params: ParamDict, func_name: str, func_kind: str) -> bool:
         dictname = 'SCIFUNCS'
         prefix = 'RUNSCI'
         path = 'science.__init__'
+        parent = 'SCIENCE'
     # deal with plotting function
     elif func_kind == 'PLOTTING':
         dictname = 'PLOTFUNCS'
         prefix = 'RUNPLOT'
         path = 'plotting.__init__'
+        parent = 'PLOTTING'
     else:
         emsg = f'Function kind "{func_kind}" not recognized'
         raise base.SCARVSException(emsg)
@@ -62,13 +64,13 @@ def check_run(params: ParamDict, func_name: str, func_kind: str) -> bool:
         WLOG(params, 'warning', wmsg)
         return False
     # deal with prefix+func_name not in constants (poor definition - can happen)
-    if f'{prefix}_{func_name}' not in params:
+    if f'{parent}.{prefix}_{func_name}' not in params:
         wmsg = f'Parameter "{prefix}_{func_name}" not found in constants'
         wmsg += f'\n\t Skipping {func_name}'
         WLOG(params, 'warning', wmsg)
         return False
     # if we've got to here we can check whether to run
-    return params[f'{prefix}_{func_name}']
+    return params[f'{parent}.{prefix}_{func_name}']
 
 
 def log_run(params: ParamDict, func_name: str, func_kind: str):

@@ -51,22 +51,22 @@ def save(params: ParamDict, outname: str, outdir: Optional[str] = None):
     # define function name
     func_name = __NAME__ + '.save()'
     # deal with not saving plot
-    if params['PLOTTING'] not in [2, 3]:
+    if params['GLOBAL.PLOTTING'] not in [2, 3]:
         return
     # deal with no output direcory
     if outdir is None:
-        outdir = params['PLOT_PATH']
+        outdir = params['GLOBAL.PLOT_PATH']
         # deal with still no output directory
-        if params['PLOT_PATH'] is None:
-            wmsg = ('"PLOT_PATH" is not defined cannot save plot.'
-                    '\n\t Define either "PLOT_PATH" or set "outdir" before '
-                    'running {0}.'.format(func_name))
+        if params['GLOBAL.PLOT_PATH'] is None:
+            wmsg = ('"GLOBAL.PLOT_PATH" is not defined cannot save plot.'
+                    '\n\t Define either "GLOBAL.PLOT_PATH" or set "outdir" '
+                    'before running {0}.'.format(func_name))
             WLOG(params, 'warning', wmsg)
             return
     # create file name
     filename = os.path.join(outdir, outname)
     # save the plots
-    for extension in params['PLOT_TYPES']:
+    for extension in params['GLOBAL.PLOT_TYPES']:
         # log saving
         msg = 'Saving plot to file: {0}.{1}'
         margs = [filename, extension]
@@ -85,7 +85,7 @@ def show(params: ParamDict, block: bool = True):
     :return: None, shows plot to screen
     """
     # deal with not showing plots
-    if params['PLOTTING'] not in [1, 3]:
+    if params['GLOBAL.PLOTTING'] not in [1, 3]:
         return
     # show the plot
     plt.show(block=block)

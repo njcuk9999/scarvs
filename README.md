@@ -85,7 +85,7 @@ To run SCARVS, you need activate the environemnt you installed scarvs in.
 Then you need to run the following command:
 
 ```bash
-scarvs_run {yaml_file}
+scarvs_run --yamlfile={yaml_file}
 ```
 
 [Back to top](#contents)
@@ -103,7 +103,7 @@ from scarvs.recipes import scarvs_run
 yaml_file = '/path/to/yaml_file.yaml'
 
 # run scarvs
-scarvs_run.main(yaml_file)
+scarvs_run.main(yaml_file=yaml_file)
 ```
 
 ### Overriding parameters
@@ -119,7 +119,7 @@ from scarvs.core import general
 # define the path to your yaml file
 yaml_file = '/path/to/yaml_file.yaml'
 # get parameters
-params = startup.get_params(yaml_file)
+params = startup.get_params(name='run', yaml_file=yaml_file)
 
 # Define data path
 params['DATA_DIR'] = '/path/to/data'
