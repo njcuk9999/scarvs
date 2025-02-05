@@ -43,7 +43,7 @@ conda activate scarvs-env
 
 ```bash
 cd {SCARVS_ROOT}
-pip install -U -e .
+pip install -U -e .[full]
 ```
 
 Note on can also use venv (instead of conda)
