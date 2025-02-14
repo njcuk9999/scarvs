@@ -92,6 +92,12 @@ CDict.add('PLOT_PATH', value=None, dtype=str,
           active=True, group=cgroup, not_none=True,
           description='Plot path (required)')
 
+# Define results path
+CDict.add('RESULTS_PATH', value=None, dtype=str,
+          source=__NAME__, user=True,
+          active=True, group=cgroup, not_none=True,
+          description='Results path (required)')
+
 # =============================================================================
 # run science functions
 # =============================================================================
@@ -115,6 +121,11 @@ CDict.add('RUNSCI_TEST', value=False, dtype=bool,
           description='Run test science function (false by default) '
                       '-- can remove')
 
+# Add FIT_KEPLERIAN function to science functions
+CDict.add('RUNSCI_FIT_KEPLERIAN', value=False, dtype=bool,
+          source=__NAME__, user=True,
+          active=True, group=cgroup,
+          description='Run FIT_KEPLERIAN science function (false by default)')
 
 # =============================================================================
 # run plot functions
@@ -139,6 +150,11 @@ CDict.add('RUNPLOT_TEST', value=False, dtype=bool,
           description='Run test plotting function (false by default) '
                       '-- can remove')
 
+# Add PLOT_RESULTS function to plot functions
+CDict.add('RUNPLOT_RESULTS', value=False, dtype=bool,
+          source=__NAME__, user=True,
+          active=True, group=cgroup,
+          description='Run PLOT_RESULTS plotting function (false by default)')
 
 # =============================================================================
 # science constants
@@ -148,7 +164,7 @@ CDict.add('RUNPLOT_TEST', value=False, dtype=bool,
 # =============================================================================
 # plot constants
 # =============================================================================
-# Add you constants here
+# Add your constants here
 
 # =============================================================================
 # Start of code
