@@ -12,36 +12,37 @@ authors = [
 description = 'Statistical tools for Combined Analysis of Radial Velocity Signals'
 readme = {file = "README.md", content-type = "text/markdown"}
 license = {file = 'LICENSE'}
-requires-python = ">=3.9"
+requires-python = "==3.11.*"
 dependencies = [
+    "radvel==1.4.11",
+    "juliet==2.2.7",
     "arviz==0.20.0",
-    "astropy==5.3",
-    "batman-package==2.4.9",
-    "corner==2.2.2",
-    "dynesty==2.1.4",
+    "astropy==7.0.1",
+    "batman-package==2.5.2",
+    "corner==2.2.3",
+    "dynesty==2.1.5",
     "emcee==3.1.6",
-    "ipython==8.13.2",
-    "jax==0.4.35",
-    "jaxoplanet==0.0.2",
-    "kepmodel==1.0.6",
+    "ipython==8.32.0",
+    "jax==0.4.31",
+    "jaxoplanet==0.0.3",
+    "kepmodel==1.0.8",
     "lightkurve==2.5.0",
-    "matplotlib==3.7.1",
-    "notebook==7.2.2",
-    "numba==0.57.0",
-    "numexpr==2.8.4",
+    "matplotlib==3.10.0",
+    "notebook==7.3.2",
+    "numba==0.61.0",
+    "numexpr==2.10.2",
     "numpy==1.24.3",
-    "numpyro==0.15.3",
+    "numpyro==0.17.0",
     "pandas==2.2.3",
     "pandastable==0.13.1",
-    "radvel==1.4.11",
-    "ruamel.yaml==0.17.31",
+    "ruamel.yaml==0.18.10",
     "scipy==1.10.1",
-    "spleaf==2.1.11",
+    "spleaf==2.1.13",
     "starry==1.2.0",
     "tinygp==0.3.0",
-    "tqdm==4.65.0",
+    "tqdm==4.67.1",
     "wget==3.2",
-    "xarray==2024.10.0"
+    "xarray==2025.1.2"
 ]
 
 [project.urls]
