@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "wheel", "numpy"]
+requires = ["setuptools", "wheel", "radvel", "numpy"]
 build-backend = "setuptools.build_meta"
 
 
@@ -14,7 +14,6 @@ readme = {file = "README.md", content-type = "text/markdown"}
 license = {file = 'LICENSE'}
 requires-python = "==3.11.*"
 dependencies = [
-    "radvel==1.4.11",
     "juliet==2.2.7",
     "arviz==0.20.0",
     "astropy==7.0.1",
@@ -22,21 +21,21 @@ dependencies = [
     "corner==2.2.3",
     "dynesty==2.1.5",
     "emcee==3.1.6",
-    "ipython==8.32.0",
+    "ipython==9.0.0",
     "jax==0.4.31",
     "jaxoplanet==0.0.3",
     "kepmodel==1.0.8",
     "lightkurve==2.5.0",
-    "matplotlib==3.10.0",
+    "matplotlib==3.10.1",
     "notebook==7.3.2",
     "numba==0.61.0",
     "numexpr==2.10.2",
-    "numpy==1.24.3",
+    "numpy==1.26.4",
     "numpyro==0.17.0",
     "pandas==2.2.3",
     "pandastable==0.13.1",
     "ruamel.yaml==0.18.10",
-    "scipy==1.10.1",
+    "scipy==1.15.2",
     "spleaf==2.1.13",
     "starry==1.2.0",
     "tinygp==0.3.0",
